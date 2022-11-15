@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 
+methylome/within_cs/
+methylome/cg_bed/
