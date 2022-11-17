@@ -10,23 +10,25 @@ output: html_document
 This script analyses patterns in epimutation rates in gene-body-methylated genes. The epimutation rates are estimated using [AlphaBeta](https://github.com/jlab-code/AlphaBeta)
 
 ## Install dependencies
-```{r}
-renv::deactivate()
+```{r include=FALSE}
 install.packages("devtools")
 library(devtools)
 install_github("jlab-code/AlphaBeta")
 ```
 
 ## Building Pedigree files of MA lineages
+```{r include=FALSE}
+nodeFile = "./nodelist.fn"
+edgeFile = "./edgelist.fn"
+
+output = AlphaBeta::buildPedigree(nodelist = nodeFile, edgelist = edgeFile, cytosine = "CG", posteriorMaxFilter= 0.99 )
+
+pedigree = output$Pdata 
+```
+
+##  Visualize pedigree
 ```{r}
-nodeFile = system.file("extdata/vg", "nodelist.fn", package = "AlphaBeta")
-edgeFile = system.file("extdata/vg", "edgelist.fn", package = "AlphaBeta")
-output = buildPedigree(nodeList = nodeFile, edgeList = edgeFile, cytosine = "CG", posteriorMaxFilter= 0.99)
-
-pedigree = output$Pdata
-
-# Visualize pedigree
-plotPedigree(nodelist = nodeFile, edgelist = edgeFile, sampling.design = "progenitor.endpoint",
+AlphaBeta::plotPedigree(nodelist = nodeFile, edgelist = edgeFile, sampling.design = "progenitor.endpoint",
 output.dir = out.dir, plot.width = 5, plot.height = 5, aspect.ratio = 1, vertex.size = 6,
 vertex.label = FALSE)
 ```
@@ -46,7 +48,7 @@ plot(dt, pedigree[, "D.value"], ylab = "Divergence value", xlab = expression(pas
 p0uu_in = output$tmpp0
 
 output.data.dir <- paste0(getwd())
-estimates = ABneutral(pedigree.data = pedigree, p0uu = p0uu_in, eqp = p0uu_in, eqp.weight = 1,
+estimates = AlphaBeta::ABneutral(pedigree.data = pedigree, p0uu = p0uu_in, eqp = p0uu_in, eqp.weight = 1,
 Nstarts = 50, out.dir = paste0(getwd()), out.name = "ABneutral_CG_global_estimates")
 summary(estimates)
 ```
