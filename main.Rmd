@@ -5,10 +5,54 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 # The epimutation profile of gbmGenes
 
-This script analyses patterns in epimutation rates in gene-body-methylated genes.
+This script analyses patterns in epimutation rates in gene-body-methylated genes. The epimutation rates are estimated using [AlphaBeta](https://github.com/jlab-code/AlphaBeta)
+
+## Install dependencies
+```{r}
+renv::deactivate()
+install.packages("devtools")
+library(devtools)
+install_github("jlab-code/AlphaBeta")
+```
+
+## Building Pedigree files of MA lineages
+```{r}
+nodeFile = system.file("extdata/vg", "nodelist.fn", package = "AlphaBeta")
+edgeFile = system.file("extdata/vg", "edgelist.fn", package = "AlphaBeta")
+output = buildPedigree(nodeList = nodeFile, edgeList = edgeFile, cytosine = "CG", posteriorMaxFilter= 0.99)
+
+pedigree = output$Pdata
+
+# Visualize pedigree
+plotPedigree(nodelist = nodeFile, edgelist = edgeFile, sampling.design = "progenitor.endpoint",
+output.dir = out.dir, plot.width = 5, plot.height = 5, aspect.ratio = 1, vertex.size = 6,
+vertex.label = FALSE)
+```
+
+## Divergence time vs methylome divergence
+
+```{r}
+dt = pedigree[, 2] + pedigree[, 3] - 2 * pedigree[, 1]
+plot(dt, pedigree[, "D.value"], ylab = "Divergence value", xlab = expression(paste(Delta,
+" t")))
+```
+
+## Epimutation rate estimation 
+
+```{r}
+# Initial proportion of unmethylated cytosines
+p0uu_in = output$tmpp0
+
+output.data.dir <- paste0(getwd())
+estimates = ABneutral(pedigree.data = pedigree, p0uu = p0uu_in, eqp = p0uu_in, eqp.weight = 1,
+Nstarts = 50, out.dir = paste0(getwd()), out.name = "ABneutral_CG_global_estimates")
+summary(estimates)
+```
+
+## Analysis
+
+
+
+

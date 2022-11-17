@@ -10,3 +10,6 @@ On the server, it takes around 5 minutes for the script to run.
 
 To check the files created, run `head -x /mnt/extStorage/constantin/epimutation-profile/y/z` where `x` is the number of lines you want to view, `y` the state of analysis (`MA3_new_total_original_methylome` for analysis, `cg_bed` for all CGs of the methylome and `within_cs` the CGs within gbM genes) and `z` is the specific file your interested in. 
 
+## View files in VS Code
+
+A nice way to view the heads of files in VS Code: `head -400 gbM_gene_anotation_extract_Arabidopsis.bed | code -`
