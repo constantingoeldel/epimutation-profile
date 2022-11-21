@@ -11,9 +11,13 @@ This script analyses patterns in epimutation rates in gene-body-methylated genes
 
 ## Install dependencies
 ```{r include=FALSE}
-install.packages("devtools")
-library(devtools)
-install_github("jlab-code/AlphaBeta")
+if (!requireNamespace("BiocManager", quietly = TRUE ))
+    install.install.packages("BiocManager")
+BiocManager::install(version = "3.12")
+
+BiocManager::install("AlphaBeta")
+BiocManager::install("data.table")
+BiocManager::install("dplyr")
 ```
 
 ## Building Pedigree files of MA lineages
