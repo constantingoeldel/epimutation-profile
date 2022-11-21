@@ -9,4 +9,4 @@ for i in methylome_*.txt.change.bed; do bedtools intersect -a $i -b /mnt/extStor
 |bedtools groupby -i - -g 1,2,6,4,7,8,9,10,11 -c 12 -o collapse \
 | awk 'BEGIN{OFS="\t"} {print $1,$2,$3,$4,$5,$6,$7,$8,$9}' \
 | sed '1i\seqnames\tstart\tstrand\tcontext\tcounts.methylated\tcounts.total\tposteriorMax\tstatus\trc.meth.lvl' - > \
-/mnt/extStorage/constantin/methylome/within_gbM_genes/$i.within_CS-clock.txt; donebash
+/mnt/extStorage/constantin/methylome/within_gbM_genes/$i.within_CS-clock.txt; done
