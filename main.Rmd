@@ -13,12 +13,27 @@ This script analyses patterns in epimutation rates in gene-body-methylated genes
 ```{r include=FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE ))
     install.install.packages("BiocManager")
-BiocManager::install(version = "3.12")
+BiocManager::install(version = "3.16")
 
 BiocManager::install("AlphaBeta")
 BiocManager::install("data.table")
 BiocManager::install("dplyr")
 ```
+
+## Estimate epimutation rate
+
+```{r}
+nodeFile = "nodelist.fn"
+edgeFile = "edgelist.fn"
+setwd("/mnt/extStorage/constantin/epimutation-profile")
+run.alphabeta.new(nodelist=nodeFile,
+                  edelist=edgeFile,
+                  name="epimutation_rate_estimation",
+                  input.dir="/mnt/extStorage/constantin/epimutation-profile/",
+                  output.dir="/mnt/extStorage/constantin/epimutation-profile/")
+# estimate_epimutation(nodeFile,edgeFile, "epimutation_rate_estimation", "/mnt/extStorage/constantin/epimutation-profile", "/mnt/extStorage/constantin/epimutation-profile" ) 
+```
+
 
 ## Building Pedigree files of MA lineages
 ```{r include=FALSE}
