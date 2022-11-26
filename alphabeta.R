@@ -22,6 +22,7 @@ run.alphabeta.new<-function(nodelist,edelist,name,input.dir,output.dir){
     ##run alphabeta
     output <- newbuildPedigree(path_node, path_ede, cytosine = "CG", posteriorMaxFilter = 0.99)
     p0uu_in <- output$tmpp0;p0uu_in
+    print(p0uu_in)
     write.table(p0uu_in, paste0("p0uu_in_",name,".txt"),row.names=F,quote = F,col.names = F)
     
     ##plot divergence vs delta_t 
@@ -29,7 +30,7 @@ run.alphabeta.new<-function(nodelist,edelist,name,input.dir,output.dir){
     write.table(pedigree,paste0("pedigree-pdata_",name,".txt"),row.names=F,quote = F) 
     
     output_ABneutral<- ABneutral(pedigree.data = pedigree, p0uu = p0uu_in,eqp = p0uu_in, 
-                                 eqp.weight = 1, Nstarts = 5, out.dir = output.dir,
+                                 eqp.weight = 1, Nstarts = 2000, out.dir = output.dir,
                                  out.name = paste0("ABneutral_CG_estimates_",name,sep=""))
     summary(output_ABneutral)
     ABplot(pedigree.names = paste0("ABneutral_CG_estimates_",name,".Rdata",sep=""), output.dir = output.dir, 
