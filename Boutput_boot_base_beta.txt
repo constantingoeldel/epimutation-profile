@@ -1,0 +1,2 @@
+Boutput_boot_base_beta_epimutation_rate_estimation 0.00160896028679975
+Boutput_boot_base_beta_epimutation_rate_estimation 0.00159371921406705

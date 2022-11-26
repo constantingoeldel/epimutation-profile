@@ -18,7 +18,11 @@ BiocManager::install(version = "3.16")
 BiocManager::install("AlphaBeta")
 BiocManager::install("data.table")
 BiocManager::install("dplyr")
+remotes::install_github("extendr/rextendr")
+library(rextendr)
 ```
+
+
 
 ## Estimate epimutation rate
 
@@ -31,48 +35,28 @@ run.alphabeta.new(nodelist=nodeFile,
                   name="epimutation_rate_estimation",
                   input.dir="/mnt/extStorage/constantin/epimutation-profile/",
                   output.dir="/mnt/extStorage/constantin/epimutation-profile/")
-# estimate_epimutation(nodeFile,edgeFile, "epimutation_rate_estimation", "/mnt/extStorage/constantin/epimutation-profile", "/mnt/extStorage/constantin/epimutation-profile" ) 
 ```
 
 
-## Building Pedigree files of MA lineages
-```{r include=FALSE}
-nodeFile = "./nodelist.fn"
-edgeFile = "./edgelist.fn"
-
-output = AlphaBeta::buildPedigree(nodelist = nodeFile, edgelist = edgeFile, cytosine = "CG", posteriorMaxFilter= 0.99 )
-
-pedigree = output$Pdata 
-```
-
-##  Visualize pedigree
-```{r}
-AlphaBeta::plotPedigree(nodelist = nodeFile, edgelist = edgeFile, sampling.design = "progenitor.endpoint",
-output.dir = out.dir, plot.width = 5, plot.height = 5, aspect.ratio = 1, vertex.size = 6,
-vertex.label = FALSE)
-```
-
-## Divergence time vs methylome divergence
+## Estimate epimutation rate per window
 
 ```{r}
-dt = pedigree[, 2] + pedigree[, 3] - 2 * pedigree[, 1]
-plot(dt, pedigree[, "D.value"], ylab = "Divergence value", xlab = expression(paste(Delta,
-" t")))
+window_size = 5
+for (i in seq(0, 100, by=window_size)) {
+print(i)
+nodeFile = "nodelist.fn"
+edgeFile = "edgelist.fn"
+setwd(sprintf("/mnt/extStorage/constantin/windows/%s", i))
+name = sprintf("epimutation_rate_estimation_window_%s",i)
+directory = sprintf("/mnt/extStorage/constantin/windows/%s/", i)
+run.alphabeta.new(nodelist=nodeFile,
+                  edelist=edgeFile,
+                  name=name,
+                  input.dir=directory,
+                  output.dir=directory)
+print("Finished calculating epimutation rate for window")
+}
 ```
-
-## Epimutation rate estimation 
-
-```{r}
-# Initial proportion of unmethylated cytosines
-p0uu_in = output$tmpp0
-
-output.data.dir <- paste0(getwd())
-estimates = AlphaBeta::ABneutral(pedigree.data = pedigree, p0uu = p0uu_in, eqp = p0uu_in, eqp.weight = 1,
-Nstarts = 50, out.dir = paste0(getwd()), out.name = "ABneutral_CG_global_estimates")
-summary(estimates)
-```
-
-## Analysis
 
 
 

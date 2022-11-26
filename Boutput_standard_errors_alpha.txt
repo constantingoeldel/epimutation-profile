@@ -1,0 +1,2 @@
+Boutput_standard_errors_alpha_epimutation_rate_estimation 3.02913725317576e-05
+Boutput_standard_errors_alpha_epimutation_rate_estimation 3.08494014624467e-05
