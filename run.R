@@ -10,9 +10,8 @@ library(rextendr)
 
 source("./alphabeta.R")
 
-window_size = 5
-for (i in seq(0, 100, by=window_size)) {
-  print(i)
+i = commandArgs()[6]
+
   nodeFile = "nodelist.fn"
   edgeFile = "edgelist.fn"
   setwd(sprintf("/mnt/extStorage/constantin/windows/%s", i))
@@ -24,7 +23,7 @@ for (i in seq(0, 100, by=window_size)) {
                     input.dir=directory,
                     output.dir=directory)
   print("Finished calculating epimutation rate for window")
-}
+
 
 
 
