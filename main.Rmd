@@ -24,20 +24,6 @@ library(rextendr)
 
 
 
-## Estimate epimutation rate
-
-```{r}
-nodeFile = "nodelist.fn"
-edgeFile = "edgelist.fn"
-setwd("/mnt/extStorage/constantin/epimutation-profile")
-run.alphabeta.new(nodelist=nodeFile,
-                  edelist=edgeFile,
-                  name="epimutation_rate_estimation",
-                  input.dir="/mnt/extStorage/constantin/epimutation-profile/",
-                  output.dir="/mnt/extStorage/constantin/epimutation-profile/")
-```
-
-
 ## Estimate epimutation rate per window
 
 ```{r}
