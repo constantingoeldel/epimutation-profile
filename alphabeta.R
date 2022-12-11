@@ -2,7 +2,7 @@
 run.alphabeta.new<-function(nodelist,edelist,name,input.dir,output.dir){
     #rm(list=ls())
     library("AlphaBeta")
-    source("/mnt/nas/zhilin/software/new_AlphaBeta_2022-03/AlphaBeta/R/newbuildPedigree_stand_alone.R")
+    source("./alphabeta/newbuildPedigree_stand_alone.R")
     
     plotPedigree(nodelist =nodelist,
                  edgelist =edelist,
