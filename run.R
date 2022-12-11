@@ -8,12 +8,13 @@ BiocManager::install("dplyr")
 # remotes::install_github("extendr/rextendr")
 library(rextendr)
 source("./alphabeta.R")
-i = commandArgs()[6]
-location = commandArgs()[7]
-print(i)
+i = commandArgs()[7]
+location = commandArgs()[8]
 
   nodeFile = "nodelist.fn"
   edgeFile = "edgelist.fn"
+  print(i)
+  print(location)
   setwd(sprintf("/mnt/extStorage/constantin/windows/%s/%s", location,  i))
   name = sprintf("epimutation_rate_estimation_window_%s_%s", location,  i)
   directory = sprintf("/mnt/extStorage/constantin/windows/%s/%s", location,  i)
